@@ -1,6 +1,12 @@
-// Burbuja de un mensaje del chat (.message de alumno/chatGrupo.html)
-function MensajeGrupo() {
-  return <div>MensajeGrupo</div>
+import '../../styles/alumno.css'
+
+function MensajeGrupo({ texto, hora, propio }) {
+  return (
+    <div className={propio ? 'message sent' : 'message received'}>
+      <p>{texto}</p>
+      <span className="time">{hora}</span>
+    </div>
+  )
 }
 
 export default MensajeGrupo
