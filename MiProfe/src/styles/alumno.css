@@ -1,0 +1,58 @@
+
+/*tarjeta de profesor*/
+.profesor-card {
+  --bs-card-border-radius: 18px;
+
+  overflow: visible;
+  text-align: center;
+  transition: 0.15s ease;
+}
+
+.profesor-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px var(--border-color);
+}
+
+.profesor-card-banner {
+  height: 56px;
+  padding: 0;
+  background-color: #eef0f2;
+}
+
+.profesor-card-avatar {
+  margin: -48px auto 0.75rem;
+  box-shadow: var(--shadow);
+}
+/*Mensajes del chat*/
+.message {
+  max-width: 70%;
+
+  padding: 0.6rem 0.9rem;
+
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+
+  font-size: 0.9rem;
+}
+
+.message p {
+  margin-bottom: 0.3rem;
+}
+
+.message .time {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.message.received {
+  align-self: flex-start;
+  background-color: #ffffff;
+}
+
+.message.sent {
+  align-self: flex-end;
+
+  background-color: var(--color-primary);
+  border-color: var(--color-primary-dark);
+  color: #ffffff;
+}
