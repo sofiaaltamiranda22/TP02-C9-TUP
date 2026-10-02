@@ -1,0 +1,4 @@
+/* Bootstrap no tiene un ancho maximo en porcentaje para las burbujas del chat */
+.mensaje-chat {
+  max-width: 70%;
+}
