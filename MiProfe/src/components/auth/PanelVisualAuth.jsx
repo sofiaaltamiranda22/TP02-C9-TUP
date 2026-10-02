@@ -4,8 +4,8 @@ import '../../styles/auth.css'
 
 function PanelVisualAuth({ frase, detalle }) {
   return (
-    <div className="auth-visual position-relative">
-      <div className="position-relative z-1 h-100 p-4 d-flex flex-column justify-content-between">
+    <div className="auth-visual position-relative h-100">
+      <div className="position-relative z-1 h-100 p-4 d-flex flex-column justify-content-between gap-5">
         <Link to="/" className="mi-titulo d-flex align-items-center gap-2 fs-4 fw-bolder text-white text-decoration-none">
           <img src={logo} alt="" width="42" height="42" className="rounded-circle bg-white object-fit-contain" />
           MiProfe

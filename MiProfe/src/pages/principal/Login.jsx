@@ -1,62 +1,41 @@
-import { Link } from 'react-router-dom'
-import PanelVisualAuth from '../../components/auth/PanelVisualAuth'
+// Inicio de sesion
+import { Form, Button } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
+import ContenidoAuth from '../../components/auth/ContenidoAuth'
 import CampoPassword from '../../components/auth/CampoPassword'
 
 function Login() {
+  const navigate = useNavigate()
+
+  // Todavia no hay backend: al iniciar sesion entra al panel del alumno
+  const iniciarSesion = (evento) => {
+    evento.preventDefault()
+    navigate('/alumno')
+  }
+
   return (
-    <div className="mi-fondo-puntos flex-grow-1 d-flex justify-content-center align-items-center p-3">
+    <>
       <title>Iniciar sesión - MiProfe</title>
       <meta name="robots" content="noindex" />
-      <div className="card shadow-lg border-0 overflow-hidden" style={{ maxWidth: '900px', width: '100%' }}>
-        <div className="row g-0">
-          
-          <PanelVisualAuth 
-            titulo="¡Hola de nuevo!" 
-            subtitulo="Ingresá para conectarte con tus profesores y clases." 
-          />
 
-    
-          <div className="col-md-6 p-4 p-md-5 bg-white">
-            <h2 className="fw-bold mb-4">Iniciar sesión</h2>
-            
-            <form>
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">Correo electrónico</label>
-                <input 
-                  type="email" 
-                  className="form-control" 
-                  id="email" 
-                  placeholder="nombre@ejemplo.com" 
-                  required 
-                />
-              </div>
+      <ContenidoAuth>
+        <h1 className="h2 mb-1">Bienvenido de nuevo</h1>
+        <p className="text-body-secondary mb-4">Iniciá sesión para continuar</p>
 
-              <div className="mb-3">
-                <CampoPassword 
-                  id="password" 
-                  label="Contraseña" 
-                  placeholder="Ingresá tu contraseña" 
-                />
-              </div>
+        <Form onSubmit={iniciarSesion} className="d-flex flex-column gap-3">
+          <Form.Group controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="email" name="email" placeholder="tu@email.com" autoComplete="email" required />
+          </Form.Group>
+          <CampoPassword id="password" label="Contraseña" placeholder="Tu contraseña" autoComplete="current-password" />
+          <Button type="submit" className="w-100">Iniciar sesión</Button>
+        </Form>
 
-              <button type="submit" className="btn btn-primary w-100 mt-3">
-                Ingresar
-              </button>
-            </form>
-
-            <div className="text-center mt-4">
-              <p className="mb-0 text-muted">
-                ¿No tenés una cuenta?{' '}
-                <Link to="/registro" className="fw-bold text-decoration-none">
-                  Registrate acá
-                </Link>
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
+        <p className="text-center mt-4 mb-0">
+          ¿No tenés cuenta? <Link to="/registro">Registrate acá</Link>
+        </p>
+      </ContenidoAuth>
+    </>
   )
 }
 
