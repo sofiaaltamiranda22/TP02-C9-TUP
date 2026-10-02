@@ -1,4 +1,5 @@
 import { Card, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 function TarjetaCta({ titulo, texto, textoBoton, fondo, varianteBoton }) {
   return (
@@ -6,7 +7,9 @@ function TarjetaCta({ titulo, texto, textoBoton, fondo, varianteBoton }) {
       <Card.Body>
         <Card.Title as="h3">{titulo}</Card.Title>
         <Card.Text>{texto}</Card.Text>
-        <Button variant={varianteBoton} href="#">{textoBoton}</Button>
+        <Button as={Link} to="/registro" variant={varianteBoton}>
+          {textoBoton}
+        </Button>
       </Card.Body>
     </Card>
   )
