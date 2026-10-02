@@ -19,3 +19,4 @@ function TarjetaGrupo({ materia, profesor, integrantes }) {
 }
 
 export default TarjetaGrupo
+

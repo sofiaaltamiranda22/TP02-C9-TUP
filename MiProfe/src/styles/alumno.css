@@ -1,0 +1,18 @@
+/* Lo que Bootstrap no trae: el resto son clases de Bootstrap en los componentes de alumno */
+.profesor-card {
+  transition: 0.15s ease;
+}
+
+.profesor-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px var(--border-color);
+}
+
+.profesor-card-avatar {
+  margin: -48px auto 0.75rem;
+  box-shadow: var(--shadow);
+}
+
+.message {
+  max-width: 70%;
+}
