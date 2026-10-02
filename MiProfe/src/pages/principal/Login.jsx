@@ -5,6 +5,8 @@ import CampoPassword from '../../components/auth/CampoPassword'
 function Login() {
   return (
     <div className="mi-fondo-puntos flex-grow-1 d-flex justify-content-center align-items-center p-3">
+      <title>Iniciar sesión - MiProfe</title>
+      <meta name="robots" content="noindex" />
       <div className="card shadow-lg border-0 overflow-hidden" style={{ maxWidth: '900px', width: '100%' }}>
         <div className="row g-0">
           

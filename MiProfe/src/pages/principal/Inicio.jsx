@@ -13,6 +13,9 @@ import TarjetaCta from '../../components/inicio/TarjetaCta'
 import { pasos, beneficios, materias, destacados, ctas } from '../../data/inicio'
 function Inicio() {
   return (
+    <>
+    <title>MiProfe - Encontrá tu profesor particular en Tucumán</title>
+
     <ContenidoPagina>
       <section id="hero">
         <h1>Encontrá al profesor particular perfecto para vos.</h1>
@@ -90,6 +93,7 @@ function Inicio() {
         </Row>
       </section>
     </ContenidoPagina>
+     </>
   )
 }
 

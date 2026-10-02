@@ -1,9 +1,16 @@
 import { Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
-function BotonMateria({ icono, materia }) {
+function BotonMateria({ icono, nombre }) {
   return (
-    <Button variant="outline-secondary" href="#" className="w-100 d-flex align-items-center justify-content-center gap-2">
-      <img src={icono} alt="" width="20" height="20" /> {materia}
+    <Button 
+      as={Link} 
+      to="/registro" 
+      variant="outline-primary" 
+      className="d-flex align-items-center gap-2 p-3 w-100 h-100 shadow-sm"
+    >
+      <span className="fs-4">{icono}</span>
+      <span className="fw-semibold">{nombre}</span>
     </Button>
   )
 }
