@@ -1,13 +1,14 @@
 import { Badge, Card } from 'react-bootstrap'
+import Avatar from '../common/Avatar'
 import '../../styles/alumno.css'
 
-// Tarjeta de profesor con banner y avatar (.profesor-card de principalAlumno.html y MisProfesores.html)
+// Tarjeta de profesor con banner y avatar. Lo que va abajo (precio, botones) llega como children
 function TarjetaProfesor({ nombre, iniciales, materia, children }) {
   return (
-    <Card as="article" className="profesor-card h-100">
-      <Card.Header className="profesor-card-banner"></Card.Header>
+    <Card as="article" className="profesor-card h-100 text-center">
+      <Card.Header className="bg-light py-4"></Card.Header>
       <Card.Body className="d-flex flex-column align-items-center">
-        <div className="avatar avatar--grande profesor-card-avatar" aria-hidden="true">{iniciales}</div>
+        <Avatar iniciales={iniciales} tamano="grande" className="profesor-card-avatar" />
         <Card.Title as="h3" className="mb-1">{nombre}</Card.Title>
         <Badge bg="primary" pill className="mb-2">{materia}</Badge>
         {children}

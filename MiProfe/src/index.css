@@ -1,111 +1,100 @@
+/* Solo lo que Bootstrap no trae. Las fuentes se cargan en index.html */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --color-primary: #2d8cf0;
+  --color-secondary: #87ceeb;
+  --border-color: #000;
+  --shadow: 4px 4px var(--border-color);
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Colores y bordes de la marca para Bootstrap */
+  --bs-primary: var(--color-primary);
+  --bs-primary-rgb: 45, 140, 240;
+  --bs-secondary: var(--color-secondary);
+  --bs-secondary-rgb: 135, 206, 235;
+  --bs-body-color: #323232;
+  --bs-body-font-family: 'Manrope', sans-serif;
+  --bs-border-radius: 5px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+h1, h2, h3, .mi-titulo, .avatar {
+  font-family: var(--font-heading);
 }
 
-body {
-  margin: 0;
+.btn {
+  border-width: 2px;
+  font-weight: 700;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+.card, .mi-sombra {
+  box-shadow: var(--shadow);
+}
+
+.mi-bg-celeste {
+  background-color: #c9dff1;
+}
+
+/* Fondo con puntos. From Uiverse.io by Deri-Kurniawan */
+.mi-fondo-puntos {
+  background-color: #eef4fb;
+  background-image:
+    radial-gradient(circle at 10% 10%, #3e73f0 5%, transparent 5%),
+    radial-gradient(circle at 90% 10%, #3e73f0 5%, transparent 5%),
+    radial-gradient(circle at 90% 90%, #3e73f0 5%, transparent 5%),
+    radial-gradient(circle at 10% 90%, #3e73f0 5%, transparent 5%);
+  background-size: 20px 20px;
+}
+
+.mi-navbar {
+  --bs-navbar-color: var(--bs-body-color);
+  --bs-navbar-hover-color: var(--color-primary);
+  --bs-navbar-active-color: var(--color-primary);
+}
+
+/* Boton celeste con sombra dura que se hunde al pasar el mouse */
+.mi-btn,
+.mi-btn:hover {
+  background-color: var(--color-secondary);
+  border-color: var(--border-color);
+  box-shadow: var(--shadow);
+}
+
+.mi-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px var(--border-color);
+}
+
+/* Circulo con iniciales (componente Avatar) */
+.avatar {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
   display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  background: var(--color-secondary);
+  font-weight: 800;
+  font-size: 0.85rem;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+.avatar--chico {
+  width: 56px;
+  height: 56px;
+  font-size: 1.1rem;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+.avatar--mini {
+  width: 34px;
+  height: 34px;
+  font-size: 0.75rem;
+  border-width: 1px;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.avatar--grande {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  font-size: 1.5rem;
+  color: #fff;
 }
