@@ -1,15 +1,13 @@
 import { Card, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-function TarjetaCta({ titulo, texto, textoBoton, variante = 'primary' }) {
+function TarjetaCta({ titulo, texto, textoBoton, fondo, varianteBoton }) {
   return (
-    <Card className="h-100 shadow-sm border-0">
-      <Card.Body className="p-4 d-flex flex-column justify-content-between">
-        <div>
-          <Card.Title as="h3" className="fw-bold mb-3">{titulo}</Card.Title>
-          <Card.Text className="text-secondary">{texto}</Card.Text>
-        </div>
-        <Button as={Link} to="/registro" variant={variante} className="mt-3 w-100 fw-bold">
+    <Card as="article" bg={fondo} text="white" className="h-100">
+      <Card.Body>
+        <Card.Title as="h3">{titulo}</Card.Title>
+        <Card.Text>{texto}</Card.Text>
+        <Button as={Link} to="/registro" variant={varianteBoton}>
           {textoBoton}
         </Button>
       </Card.Body>
