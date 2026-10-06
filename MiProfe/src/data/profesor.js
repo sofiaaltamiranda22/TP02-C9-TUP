@@ -29,7 +29,7 @@ export const resumen = [
   {
     id: 1,
     titulo: 'Solicitudes nuevas',
-    numero: solicitudes.length,
+    numero: null, // se calcula en la pagina con las solicitudes que quedan sin responder
     detalle: 'solicitudes pendientes',
     color: 'primary',
     ruta: '/profesor/solicitudes',
