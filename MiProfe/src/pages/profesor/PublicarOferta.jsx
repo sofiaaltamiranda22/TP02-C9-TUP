@@ -1,5 +1,5 @@
 // Publicar oferta de clases
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import ContenidoPagina from '../../components/layout/ContenidoPagina'
@@ -8,6 +8,15 @@ import { modalidades } from '../../data/profesor'
 
 function PublicarOferta() {
   const [publicada, setPublicada] = useState(false)
+
+  // Cuando se publica una oferta, el aviso de "¡Listo!" se va solo a los 4 segundos.
+  // Si el aviso se cierra antes o salis de la pagina, se cancela la espera
+  useEffect(() => {
+    if (!publicada) return
+
+    const espera = setTimeout(() => setPublicada(false), 4000)
+    return () => clearTimeout(espera)
+  }, [publicada])
 
   // Todavia no hay backend: muestra el aviso y deja el formulario vacio para otra oferta
   const publicar = (evento) => {
