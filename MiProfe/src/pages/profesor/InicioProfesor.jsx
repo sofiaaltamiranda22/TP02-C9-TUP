@@ -1,12 +1,18 @@
 // Inicio del profesor
+import { useState } from 'react'
 import { Row, Col, Button, ListGroup } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import ContenidoPagina from '../../components/layout/ContenidoPagina'
 import TarjetaPerfilProfesor from '../../components/profesor/TarjetaPerfilProfesor'
 import TarjetaResumen from '../../components/profesor/TarjetaResumen'
-import { profesor, resumen, proximasClases } from '../../data/profesor'
+import { profesor, resumen, proximasClases, solicitudes } from '../../data/profesor'
 
 function InicioProfesor() {
+  // Cuantas solicitudes quedan sin responder. Se lee una sola vez al cargar, de lo que guarda la pagina Solicitudes
+  const [cantidadPendientes] = useState(
+    () => (JSON.parse(localStorage.getItem('miprofe-solicitudes')) ?? solicitudes).length,
+  )
+
   return (
     <>
       <title>Inicio profesor - MiProfe</title>
@@ -33,7 +39,12 @@ function InicioProfesor() {
           <Row className="g-4">
             {resumen.map((item) => (
               <Col md={4} key={item.id}>
-                <TarjetaResumen titulo={item.titulo} numero={item.numero} detalle={item.detalle} color={item.color}>
+                <TarjetaResumen
+                  titulo={item.titulo}
+                  numero={item.numero ?? cantidadPendientes}
+                  detalle={item.detalle}
+                  color={item.color}
+                >
                   {item.ruta && (
                     <Button as={Link} to={item.ruta} variant="outline-dark" size="sm" className="mt-auto align-self-start">
                       {item.textoLink}

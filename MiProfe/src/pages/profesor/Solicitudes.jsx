@@ -1,13 +1,19 @@
 // Solicitudes de alumnos
-import { useState } from 'react'
-import { Alert } from 'react-bootstrap'
+import { useState, useEffect } from 'react'
+import { Alert, Button } from 'react-bootstrap'
 import ContenidoPagina from '../../components/layout/ContenidoPagina'
 import TarjetaSolicitud from '../../components/profesor/TarjetaSolicitud'
 import { solicitudes } from '../../data/profesor'
 
 function Solicitudes() {
-  const [pendientes, setPendientes] = useState(solicitudes)
+  // Arranca con las solicitudes guardadas en el navegador y, si no hay, con las de ejemplo
+  const [pendientes, setPendientes] = useState(() => JSON.parse(localStorage.getItem('miprofe-solicitudes')) ?? solicitudes)
   const [aviso, setAviso] = useState(null)
+
+  // Cada vez que cambia la lista la guarda, asi las que ya respondiste no vuelven a aparecer al refrescar
+  useEffect(() => {
+    localStorage.setItem('miprofe-solicitudes', JSON.stringify(pendientes))
+  }, [pendientes])
 
   // Saca la solicitud de la lista y muestra un aviso con lo que se respondio
   const responder = (solicitud, aceptada) => {
@@ -53,6 +59,12 @@ function Solicitudes() {
               />
             ))}
           </div>
+
+          {pendientes.length === 0 && (
+            <Button variant="outline-dark" onClick={() => setPendientes(solicitudes)}>
+              Volver a cargar las solicitudes de ejemplo
+            </Button>
+          )}
         </section>
       </ContenidoPagina>
     </>

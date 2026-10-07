@@ -1,5 +1,5 @@
 // Chat del alumno
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Row, Col, Card, ListGroup, Form, Button, Badge } from 'react-bootstrap'
 import ContenidoPagina from '../../components/layout/ContenidoPagina'
 import Avatar from '../../components/common/Avatar'
@@ -7,8 +7,14 @@ import MensajeGrupo from '../../components/alumno/MensajeGrupo'
 import { conversaciones, mensajes } from '../../data/alumno'
 
 function ChatGrupo() {
-  const [lista, setLista] = useState(mensajes)
+  // Arranca con los mensajes guardados en el navegador y, si no hay, con los de ejemplo
+  const [lista, setLista] = useState(() => JSON.parse(localStorage.getItem('miprofe-chat-alumno')) ?? mensajes)
   const [texto, setTexto] = useState('')
+
+  // Cada vez que cambia la conversacion la guarda, asi no se pierde al refrescar o al cambiar de pagina
+  useEffect(() => {
+    localStorage.setItem('miprofe-chat-alumno', JSON.stringify(lista))
+  }, [lista])
 
   // Agrega el mensaje escrito al final de la conversacion
   const enviar = (evento) => {
@@ -79,4 +85,5 @@ function ChatGrupo() {
 }
 
 export default ChatGrupo
+
 
