@@ -1,4 +1,5 @@
 // Landing publica
+import { useState, useEffect } from 'react'
 import { Row, Col, Form, Button, Badge } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import ContenidoPagina from '../../components/layout/ContenidoPagina'
@@ -12,6 +13,18 @@ import logo from '../../assets/img/Logo_Principal.png'
 
 function Inicio() {
   const navigate = useNavigate()
+  // Posicion de la materia que se muestra como ejemplo en el buscador
+  const [indiceMateria, setIndiceMateria] = useState(0)
+
+  // Al cargar la pagina arranca un intervalo que cada 2 segundos pasa a la materia siguiente.
+  // Al salir de la pagina se corta, para que no siga corriendo
+  useEffect(() => {
+    const intervalo = setInterval(() => {
+      setIndiceMateria((indice) => (indice + 1) % materias.length)
+    }, 2000)
+
+    return () => clearInterval(intervalo)
+  }, [])
 
   // Todavia no hay backend: el buscador lleva a crear la cuenta, como en el TP1
   const buscar = (evento) => {
@@ -41,7 +54,11 @@ function Inicio() {
               <Form onSubmit={buscar}>
                 <Row className="g-2">
                   <Col md={6}>
-                    <Form.Control name="materia" placeholder="¿Qué querés aprender?" aria-label="Materia" />
+                    <Form.Control
+                      name="materia"
+                      placeholder={`¿Qué querés aprender? Ej: ${materias[indiceMateria].materia}`}
+                      aria-label="Materia"
+                    />
                   </Col>
                   <Col md={3}>
                     <Form.Control name="zona" placeholder="Zona" aria-label="Zona" />
