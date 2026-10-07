@@ -1,10 +1,12 @@
 // Registro de alumno o profesor
-import { useState } from 'react'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { useState, useEffect } from 'react'
+import { Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import ContenidoAuth from '../../components/auth/ContenidoAuth'
 import CampoPassword from '../../components/auth/CampoPassword'
 import SelectNivel from '../../components/common/SelectNivel'
+import PantallaCarga from '../../components/common/PantallaCarga'
+import { cuentasDePrueba } from '../../data/cuentas'
 
 const roles = [
   { valor: 'alumno', texto: 'Alumno' },
@@ -31,13 +33,39 @@ const camposProfesor = [
 const modalidades = ['Virtual', 'Presencial', 'Ambas']
 
 function Registro() {
-  const [rol, setRol] = useState('alumno')
   const navigate = useNavigate()
+  const [rol, setRol] = useState('alumno')
+  const [error, setError] = useState('')
+  // Panel al que va a entrar despues de crear la cuenta. Mientras sea null no se muestra el loader
+  const [destino, setDestino] = useState(null)
 
-  // Todavia no hay backend: al crear la cuenta entra al panel que eligio
+  // Cuando ya hay un destino, muestra el loader un momento y despues entra al panel
+  useEffect(() => {
+    if (!destino) return
+
+    const espera = setTimeout(() => navigate(destino), 1500)
+    return () => clearTimeout(espera)
+  }, [destino, navigate])
+
+  // Valida los datos y guarda la cuenta nueva en el navegador para poder usarla en el Login
   const crearCuenta = (evento) => {
     evento.preventDefault()
-    navigate(`/${rol}`)
+    const datos = new FormData(evento.target)
+    const registradas = JSON.parse(localStorage.getItem('miprofe-cuentas')) ?? []
+
+    if (datos.get('password') !== datos.get('password2')) {
+      setError('Las contraseñas no coinciden.')
+      return
+    }
+    if ([...cuentasDePrueba, ...registradas].some((cuenta) => cuenta.email === datos.get('email'))) {
+      setError('Ya hay una cuenta con ese email.')
+      return
+    }
+
+    const nueva = { nombre: datos.get('nombre'), email: datos.get('email'), password: datos.get('password'), rol }
+    localStorage.setItem('miprofe-cuentas', JSON.stringify([...registradas, nueva]))
+    setError('')
+    setDestino(`/${rol}`)
   }
 
   return (
@@ -45,11 +73,13 @@ function Registro() {
       <title>Crear cuenta - MiProfe</title>
       <meta name="robots" content="noindex" />
 
+      {destino && <PantallaCarga texto="Creando tu cuenta..." />}
+
       <ContenidoAuth>
         <h1 className="h2 mb-1">Sumate</h1>
         <p className="text-body-secondary mb-4">Creá tu cuenta para empezar</p>
 
-        <Form onSubmit={crearCuenta} className="d-flex flex-column gap-4">
+        <Form onSubmit={crearCuenta} onChange={() => setError('')} className="d-flex flex-column gap-4">
           <fieldset>
             <legend className="fs-6 fw-bold">Quiero registrarme como</legend>
             {roles.map((opcion) => (
@@ -153,6 +183,8 @@ function Registro() {
             required
             label="Acepto los Términos y condiciones y la Política de privacidad de MiProfe"
           />
+
+          {error && <Alert variant="danger" className="mb-0">{error}</Alert>}
 
           <Button type="submit" className="w-100">Crear cuenta</Button>
         </Form>
