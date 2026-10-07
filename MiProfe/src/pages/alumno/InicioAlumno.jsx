@@ -1,5 +1,5 @@
 // Inicio del alumno
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Row, Col, Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import ContenidoPagina from '../../components/layout/ContenidoPagina'
@@ -7,17 +7,28 @@ import Avatar from '../../components/common/Avatar'
 import SeccionProfesores from '../../components/alumno/SeccionProfesores'
 import { alumno, profesores, materias, modalidades } from '../../data/alumno'
 
+const filtrosVacios = { materia: '', modalidad: '', precioMaximo: '' }
+
 function InicioAlumno() {
-  const [materia, setMateria] = useState('')
-  const [modalidad, setModalidad] = useState('')
-  const [precioMaximo, setPrecioMaximo] = useState('')
+  // Arranca con los filtros que usaste la ultima vez (guardados en el navegador)
+  const [filtros, setFiltros] = useState(() => JSON.parse(localStorage.getItem('miprofe-filtros')) ?? filtrosVacios)
+
+  // Cada vez que cambia un filtro lo guarda, asi al volver al inicio siguen puestos
+  useEffect(() => {
+    localStorage.setItem('miprofe-filtros', JSON.stringify(filtros))
+  }, [filtros])
+
+  // Cambia solo el filtro que se toco (por el name del campo) y deja los demas como estaban
+  const cambiarFiltro = (evento) => {
+    setFiltros({ ...filtros, [evento.target.name]: evento.target.value })
+  }
 
   // Deja solo los profesores que coinciden con los filtros elegidos
   const filtrados = profesores.filter(
     (profesor) =>
-      (materia === '' || profesor.materia === materia) &&
-      (modalidad === '' || profesor.modalidad === modalidad) &&
-      (precioMaximo === '' || profesor.precio <= Number(precioMaximo)),
+      (filtros.materia === '' || profesor.materia === filtros.materia) &&
+      (filtros.modalidad === '' || profesor.modalidad === filtros.modalidad) &&
+      (filtros.precioMaximo === '' || profesor.precio <= Number(filtros.precioMaximo)),
   )
 
   return (
@@ -40,13 +51,18 @@ function InicioAlumno() {
         </section>
 
         <section>
-          <h2 className="mb-3">Buscar profesores</h2>
+          <div className="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+            <h2 className="mb-0">Buscar profesores</h2>
+            <Button variant="link" onClick={() => setFiltros(filtrosVacios)}>
+              Limpiar filtros
+            </Button>
+          </div>
           <Form onSubmit={(evento) => evento.preventDefault()} className="p-3 bg-light border border-2 border-dark rounded">
             <Row className="g-3">
               <Col md={4}>
                 <Form.Group controlId="filtro-materia">
                   <Form.Label>Materia</Form.Label>
-                  <Form.Select value={materia} onChange={(evento) => setMateria(evento.target.value)}>
+                  <Form.Select name="materia" value={filtros.materia} onChange={cambiarFiltro}>
                     <option value="">Todas</option>
                     {materias.map((opcion) => (
                       <option key={opcion}>{opcion}</option>
@@ -57,7 +73,7 @@ function InicioAlumno() {
               <Col md={4}>
                 <Form.Group controlId="filtro-modalidad">
                   <Form.Label>Modalidad</Form.Label>
-                  <Form.Select value={modalidad} onChange={(evento) => setModalidad(evento.target.value)}>
+                  <Form.Select name="modalidad" value={filtros.modalidad} onChange={cambiarFiltro}>
                     <option value="">Todas</option>
                     {modalidades.map((opcion) => (
                       <option key={opcion}>{opcion}</option>
@@ -70,10 +86,11 @@ function InicioAlumno() {
                   <Form.Label>Precio máximo por hora</Form.Label>
                   <Form.Control
                     type="number"
+                    name="precioMaximo"
                     min="0"
                     placeholder="$5000"
-                    value={precioMaximo}
-                    onChange={(evento) => setPrecioMaximo(evento.target.value)}
+                    value={filtros.precioMaximo}
+                    onChange={cambiarFiltro}
                   />
                 </Form.Group>
               </Col>
@@ -95,3 +112,4 @@ function InicioAlumno() {
 }
 
 export default InicioAlumno
+
