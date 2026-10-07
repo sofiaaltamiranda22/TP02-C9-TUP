@@ -1,5 +1,5 @@
 // Perfil de un profesor, ruta /alumno/profesores/:id
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Badge, Button, Alert, ListGroup } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom'
 import ContenidoPagina from '../../components/layout/ContenidoPagina'
@@ -9,7 +9,15 @@ import { profesores } from '../../data/alumno'
 
 function PerfilProfesor() {
   const { id } = useParams()
-  const [solicitudEnviada, setSolicitudEnviada] = useState(false)
+  // ids de los profesores a los que ya les mandaste solicitud (guardados en el navegador)
+  const [enviadas, setEnviadas] = useState(
+    () => JSON.parse(localStorage.getItem('miprofe-solicitudes-enviadas')) ?? [],
+  )
+
+  // Cada vez que mandas una solicitud la guarda, asi no la podes mandar dos veces aunque refresques
+  useEffect(() => {
+    localStorage.setItem('miprofe-solicitudes-enviadas', JSON.stringify(enviadas))
+  }, [enviadas])
 
   // El id de la URL llega como texto, por eso se pasa a numero
   const profesor = profesores.find((p) => p.id === Number(id))
@@ -25,6 +33,8 @@ function PerfilProfesor() {
       </ContenidoPagina>
     )
   }
+
+  const solicitudEnviada = enviadas.includes(profesor.id)
 
   return (
     <>
@@ -74,10 +84,10 @@ function PerfilProfesor() {
           <h2 className="visually-hidden">Contactar</h2>
           {solicitudEnviada ? (
             <Alert variant="success" className="mb-0">
-              Le enviamos tu solicitud a {profesor.nombre}.
+              Ya le enviaste una solicitud a {profesor.nombre}.
             </Alert>
           ) : (
-            <Button onClick={() => setSolicitudEnviada(true)}>Solicitar clase</Button>
+            <Button onClick={() => setEnviadas([...enviadas, profesor.id])}>Solicitar clase</Button>
           )}
           <Button as={Link} to="/alumno/chat" variant="outline-dark">
             Enviar mensaje
@@ -89,3 +99,4 @@ function PerfilProfesor() {
 }
 
 export default PerfilProfesor
+
