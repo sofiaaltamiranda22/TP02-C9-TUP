@@ -8,6 +8,7 @@ import TarjetaPaso from '../../components/inicio/TarjetaPaso'
 import BotonMateria from '../../components/inicio/BotonMateria'
 import TarjetaDestacado from '../../components/inicio/TarjetaDestacado'
 import TarjetaCta from '../../components/inicio/TarjetaCta'
+import InfoMateria from '../../components/inicio/InfoMateria'
 import { beneficios, pasos, materias, destacados, ctas } from '../../data/inicio'
 import logo from '../../assets/img/Logo_Principal.png'
 
@@ -15,6 +16,8 @@ function Inicio() {
   const navigate = useNavigate()
   // Posicion de la materia que se muestra como ejemplo en el buscador
   const [indiceMateria, setIndiceMateria] = useState(0)
+  // Materia que se toco en "Elegí por materia". Mientras sea null no se muestra la ventana
+  const [materiaElegida, setMateriaElegida] = useState(null)
 
   // Al cargar la pagina arranca un intervalo que cada 2 segundos pasa a la materia siguiente.
   // Al salir de la pagina se corta, para que no siga corriendo
@@ -111,11 +114,12 @@ function Inicio() {
         </section>
 
         <section id="materias">
-          <h2 className="mb-3">Elegí por materia</h2>
+          <h2 className="mb-1">Elegí por materia</h2>
+          <p className="text-body-secondary mb-3">Tocá una materia para conocer de qué se trata.</p>
           <Row className="g-2">
             {materias.map((materia) => (
               <Col xs={6} md={3} key={materia.id}>
-                <BotonMateria icono={materia.icono} materia={materia.materia} />
+                <BotonMateria icono={materia.icono} materia={materia.materia} onElegir={() => setMateriaElegida(materia)} />
               </Col>
             ))}
             <Col xs={6} md={3}>
@@ -164,6 +168,10 @@ function Inicio() {
           </Row>
         </section>
       </ContenidoPagina>
+
+      {materiaElegida && (
+        <InfoMateria key={materiaElegida.id} materia={materiaElegida} onCerrar={() => setMateriaElegida(null)} />
+      )}
     </>
   )
 }
