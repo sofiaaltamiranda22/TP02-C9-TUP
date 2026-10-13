@@ -36,14 +36,15 @@ export const pasos = [
   },
 ]
 
+// articulo: el nombre exacto de la pagina en Wikipedia ("Inglés" solo tiene varios significados)
 export const materias = [
-  { id: 1, icono: matematicas, materia: 'Matemática' },
-  { id: 2, icono: ingles, materia: 'Inglés' },
-  { id: 3, icono: fisica, materia: 'Física' },
-  { id: 4, icono: programacion, materia: 'Programación' },
-  { id: 5, icono: quimica, materia: 'Química' },
-  { id: 6, icono: lengua, materia: 'Lengua' },
-  { id: 7, icono: historia, materia: 'Historia' },
+  { id: 1, icono: matematicas, materia: 'Matemática', articulo: 'Matemáticas' },
+  { id: 2, icono: ingles, materia: 'Inglés', articulo: 'Idioma inglés' },
+  { id: 3, icono: fisica, materia: 'Física', articulo: 'Física' },
+  { id: 4, icono: programacion, materia: 'Programación', articulo: 'Programación' },
+  { id: 5, icono: quimica, materia: 'Química', articulo: 'Química' },
+  { id: 6, icono: lengua, materia: 'Lengua', articulo: 'Idioma español' },
+  { id: 7, icono: historia, materia: 'Historia', articulo: 'Historia' },
 ]
 
 export const destacados = [
