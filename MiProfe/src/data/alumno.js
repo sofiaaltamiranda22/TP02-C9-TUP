@@ -10,6 +10,13 @@ export const alumno = {
 
 export const materias = ['Matemática', 'Inglés', 'Física', 'Química', 'Programación', 'Historia']
 
+// Nombre exacto de la pagina en Wikipedia de las materias que tienen varios significados.
+// Las que no estan aca se buscan con su mismo nombre
+export const articulosWikipedia = {
+  Inglés: 'Idioma inglés',
+  Lengua: 'Idioma español',
+}
+
 export const modalidades = ['Virtual', 'Presencial', 'Ambas']
 
 // cercano, recomendado y contratado dicen en que lista aparece cada profesor

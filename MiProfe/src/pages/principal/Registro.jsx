@@ -16,6 +16,7 @@ const roles = [
 // Los completan alumnos y profesores
 const camposComunes = [
   { id: 'nombre', label: 'Nombre completo', tipo: 'text' },
+  { id: 'dni', label: 'DNI', tipo: 'text', placeholder: 'Ej: 40123456', inputMode: 'numeric' },
   { id: 'email', label: 'Email', tipo: 'email' },
   { id: 'telefono', label: 'Teléfono / WhatsApp', tipo: 'tel' },
   { id: 'ciudad', label: 'Ciudad / Zona', tipo: 'text', placeholder: 'Ej: San Miguel de Tucumán' },
@@ -52,17 +53,29 @@ function Registro() {
     evento.preventDefault()
     const datos = new FormData(evento.target)
     const registradas = JSON.parse(localStorage.getItem('miprofe-cuentas')) ?? []
+    const cuentas = [...cuentasDePrueba, ...registradas]
+    // Se guarda solo con numeros, asi "40.123.456" y "40123456" cuentan como el mismo DNI
+    const dni = datos.get('dni').replace(/\D/g, '')
 
+    if (dni.length < 7 || dni.length > 8) {
+      setError('El DNI tiene que tener 7 u 8 números.')
+      return
+    }
     if (datos.get('password') !== datos.get('password2')) {
       setError('Las contraseñas no coinciden.')
       return
     }
-    if ([...cuentasDePrueba, ...registradas].some((cuenta) => cuenta.email === datos.get('email'))) {
+    // Una sola cuenta por persona: si el DNI ya esta registrado no deja crear otra
+    if (cuentas.some((cuenta) => cuenta.dni === dni)) {
+      setError('Ya hay una cuenta con ese DNI. Si es tuya, iniciá sesión.')
+      return
+    }
+    if (cuentas.some((cuenta) => cuenta.email === datos.get('email'))) {
       setError('Ya hay una cuenta con ese email.')
       return
     }
 
-    const nueva = { nombre: datos.get('nombre'), email: datos.get('email'), password: datos.get('password'), rol }
+    const nueva = { nombre: datos.get('nombre'), dni, email: datos.get('email'), password: datos.get('password'), rol }
     localStorage.setItem('miprofe-cuentas', JSON.stringify([...registradas, nueva]))
     setError('')
     setDestino(`/${rol}`)
@@ -103,7 +116,13 @@ function Registro() {
                 <Col md={6} key={campo.id}>
                   <Form.Group controlId={campo.id}>
                     <Form.Label>{campo.label}</Form.Label>
-                    <Form.Control type={campo.tipo} name={campo.id} placeholder={campo.placeholder} required />
+                    <Form.Control
+                      type={campo.tipo}
+                      name={campo.id}
+                      placeholder={campo.placeholder}
+                      inputMode={campo.inputMode}
+                      required
+                    />
                   </Form.Group>
                 </Col>
               ))}
