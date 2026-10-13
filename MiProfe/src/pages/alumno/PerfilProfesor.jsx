@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import ContenidoPagina from '../../components/layout/ContenidoPagina'
 import Avatar from '../../components/common/Avatar'
 import TarjetaResena from '../../components/alumno/TarjetaResena'
+import SobreMateria from '../../components/alumno/SobreMateria'
 import { profesores } from '../../data/alumno'
 
 function PerfilProfesor() {
@@ -64,6 +65,8 @@ function PerfilProfesor() {
             ))}
           </ListGroup>
         </section>
+
+        <SobreMateria key={profesor.materia} materia={profesor.materia} />
 
         <section id="resenas">
           <h2 className="h4 mb-3">Reseñas</h2>
