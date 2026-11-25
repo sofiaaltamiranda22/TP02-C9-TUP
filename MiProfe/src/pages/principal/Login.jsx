@@ -1,4 +1,5 @@
 // Inicio de sesion
+import { HandWaving } from '@phosphor-icons/react'
 import { useState, useEffect } from 'react'
 import { Form, Button, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
@@ -47,8 +48,11 @@ function Login() {
       {destino && <PantallaCarga texto="Entrando a tu panel..." />}
 
       <ContenidoAuth>
-        <h1 className="h2 mb-1">Bienvenido de nuevo</h1>
-        <p className="text-body-secondary mb-4">Iniciá sesión para continuar</p>
+        <header className="text-center mb-4">
+          <p className="icono-auth mx-auto mb-3" aria-hidden="true"><HandWaving weight="duotone" /></p>
+          <h1 className="h2 mb-1">Bienvenido de nuevo</h1>
+          <p className="text-body-secondary mb-0">Iniciá sesión para seguir aprendiendo</p>
+        </header>
 
         {error && <Alert variant="danger">{error}</Alert>}
 
@@ -58,15 +62,16 @@ function Login() {
             <Form.Control type="email" name="email" placeholder="tu@email.com" autoComplete="email" required />
           </Form.Group>
           <CampoPassword id="password" label="Contraseña" placeholder="Tu contraseña" autoComplete="current-password" />
-          <Button type="submit" className="w-100">Iniciar sesión</Button>
+          <Button type="submit" className="w-100 py-2">Iniciar sesión</Button>
         </Form>
 
         <p className="text-center mt-4 mb-0">
           ¿No tenés cuenta? <Link to="/registro">Registrate acá</Link>
         </p>
-        <p className="text-center small text-body-secondary mt-2 mb-0">
-          Para probar: alumno@miprofe.com o profesor@miprofe.com, contraseña 12345678
-        </p>
+        <aside className="small text-body-secondary bg-body-tertiary rounded-3 p-3 mt-3">
+          <strong className="d-block mb-1">Cuentas para probar</strong>
+          alumno@miprofe.com o profesor@miprofe.com · contraseña 12345678
+        </aside>
       </ContenidoAuth>
     </>
   )

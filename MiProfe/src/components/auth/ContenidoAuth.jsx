@@ -1,24 +1,13 @@
-// Tarjeta de Login y Registro: imagen con la frase a la izquierda y el formulario a la derecha
-import { Container, Row, Col } from 'react-bootstrap'
-import PanelVisualAuth from './PanelVisualAuth'
+// Pantalla de Login y Registro: ilustracion de fondo y el formulario en un cuadro blanco en el medio
+import '../../styles/auth.css'
+import '../../styles/bento.css'
 
-function ContenidoAuth({ children }) {
+// tamano: 'chica' para el login y 'grande' para el registro (que tiene mas campos)
+function ContenidoAuth({ tamano = 'chica', children }) {
   return (
-    <div className="mi-fondo-puntos flex-grow-1 d-flex align-items-center py-4 px-2">
-      <Container className="bg-white rounded-4 shadow overflow-hidden p-0">
-        <Row className="g-0">
-          <Col lg={5}>
-            <PanelVisualAuth
-              frase="Encontrá el profesor particular ideal para vos"
-              detalle="Clases virtuales, presenciales o ambas. Buscá, chateá y coordiná todo en un solo lugar."
-            />
-          </Col>
-          <Col lg={7} as="section" className="p-4 p-md-5">
-            {children}
-          </Col>
-        </Row>
-      </Container>
-    </div>
+    <section className="auth-fondo flex-grow-1 d-flex align-items-center justify-content-center px-3 py-4 py-md-5">
+      <article className={`cuadro auth-tarjeta auth-tarjeta--${tamano} p-4 p-md-5`}>{children}</article>
+    </section>
   )
 }
 

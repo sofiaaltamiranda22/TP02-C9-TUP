@@ -1,14 +1,10 @@
-// Burbuja de un mensaje del chat del profesor
-import '../../styles/profesor.css'
-
+// Burbuja de un mensaje del chat del profesor (va adentro de una lista <ol>)
 function MensajeChat({ autor, texto, propio }) {
-  const lado = propio ? 'align-self-end bg-primary text-white' : 'align-self-start bg-white'
-
   return (
-    <div className={`mensaje-chat px-3 py-2 border border-2 border-dark rounded ${lado}`}>
-      <span className="d-block small fw-bold opacity-75">{autor}</span>
+    <li className={`burbuja ${propio ? 'burbuja--propia' : ''}`}>
+      <strong className="burbuja-meta">{autor}</strong>
       {texto}
-    </div>
+    </li>
   )
 }
 

@@ -1,0 +1,133 @@
+/* Chat de alumno y profesor: lista de conversaciones a la izquierda y la conversacion a la derecha */
+.chat {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 992px) {
+  .chat { grid-template-columns: 320px 1fr; }
+}
+
+/* Lista de conversaciones */
+.chat-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/* En celu y tablet la lista va de costado y se desliza con el dedo */
+@media (max-width: 991px) {
+  .chat-lista {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    scroll-snap-type: x mandatory;
+  }
+
+  .chat-lista li {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+}
+
+.chat-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border: none;
+  border-radius: 14px;
+  background: transparent;
+  text-align: left;
+  color: inherit;
+  transition: background-color 0.15s ease;
+}
+
+.chat-item:hover {
+  background: #f2f4f7;
+}
+
+.chat-item[aria-current="true"] {
+  background: var(--color-primary-suave);
+}
+
+/* Conversacion abierta */
+.chat-conversacion {
+  padding: 0;
+  min-height: 520px;
+}
+
+.chat-conversacion > header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.chat-mensajes {
+  list-style: none;
+  margin: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.25rem;
+  max-height: 55vh;
+  overflow-y: auto;
+  background: var(--color-fondo);
+}
+
+/* Burbujas */
+.burbuja {
+  max-width: min(75%, 520px);
+  padding: 0.6rem 0.9rem;
+  border-radius: 18px 18px 18px 6px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+  align-self: flex-start;
+  word-wrap: break-word;
+}
+
+.burbuja--propia {
+  align-self: flex-end;
+  border-radius: 18px 18px 6px 18px;
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.burbuja-meta {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+.chat-conversacion > form {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.9rem 1rem;
+  border-top: 1px solid var(--color-borde);
+}
+
+.chat-conversacion > form .form-control {
+  border-radius: 50rem;
+}
+
+.chat-conversacion > form .btn {
+  border-radius: 50rem;
+}
+
+.punto-en-linea {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #12b76a;
+  margin-right: 0.3rem;
+}

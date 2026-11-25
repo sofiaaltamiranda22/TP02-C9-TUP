@@ -1,18 +1,11 @@
-import calidad from '../assets/img/calidad.png'
-import tarjeta from '../assets/img/tarjeta-de-credito.png'
-import charla from '../assets/img/charla.png'
-import matematicas from '../assets/img/matematicas.png'
-import ingles from '../assets/img/eng.png'
-import fisica from '../assets/img/atomo.png'
-import programacion from '../assets/img/lenguaje-de-codificacion.png'
-import quimica from '../assets/img/matraz.png'
-import lengua from '../assets/img/espanol.png'
-import historia from '../assets/img/desplazarse.png'
+import { Atom, Backpack, BookOpenText, ChalkboardTeacher, ChatsCircle, Code, Flask, HandCoins, MathOperations, Scroll, ShieldCheck, Translate } from '@phosphor-icons/react'
+
+// Iconos de Phosphor Icons (phosphoricons.com), en estilo "duotone"
 
 export const beneficios = [
-  { id: 1, icono: calidad, titulo: 'Perfiles verificados', texto: 'Identidad y formación confirmadas.' },
-  { id: 2, icono: tarjeta, titulo: 'Sin comisiones ocultas', texto: 'Vos acordás el precio con tu profe.' },
-  { id: 3, icono: charla, titulo: 'Chat integrado', texto: 'Coordiná todo sin salir de MiProfe.' },
+  { id: 1, icono: <ShieldCheck weight="duotone" />, titulo: 'Perfiles verificados', color: 'verde', texto: 'Identidad y formación confirmadas.' },
+  { id: 2, icono: <HandCoins weight="duotone" />, titulo: 'Sin comisiones ocultas', color: 'amarillo', texto: 'Vos acordás el precio con tu profe.' },
+  { id: 3, icono: <ChatsCircle weight="duotone" />, titulo: 'Chat integrado', color: 'violeta', texto: 'Coordiná todo sin salir de MiProfe.' },
 ]
 
 export const pasos = [
@@ -38,13 +31,13 @@ export const pasos = [
 
 // articulo: el nombre exacto de la pagina en Wikipedia ("Inglés" solo tiene varios significados)
 export const materias = [
-  { id: 1, icono: matematicas, materia: 'Matemática', articulo: 'Matemáticas' },
-  { id: 2, icono: ingles, materia: 'Inglés', articulo: 'Idioma inglés' },
-  { id: 3, icono: fisica, materia: 'Física', articulo: 'Física' },
-  { id: 4, icono: programacion, materia: 'Programación', articulo: 'Programación' },
-  { id: 5, icono: quimica, materia: 'Química', articulo: 'Química' },
-  { id: 6, icono: lengua, materia: 'Lengua', articulo: 'Idioma español' },
-  { id: 7, icono: historia, materia: 'Historia', articulo: 'Historia' },
+  { id: 1, icono: <MathOperations weight="duotone" />, materia: 'Matemática', articulo: 'Matemáticas' },
+  { id: 2, icono: <Translate weight="duotone" />, materia: 'Inglés', articulo: 'Idioma inglés' },
+  { id: 3, icono: <Atom weight="duotone" />, materia: 'Física', articulo: 'Física' },
+  { id: 4, icono: <Code weight="duotone" />, materia: 'Programación', articulo: 'Programación' },
+  { id: 5, icono: <Flask weight="duotone" />, materia: 'Química', articulo: 'Química' },
+  { id: 6, icono: <BookOpenText weight="duotone" />, materia: 'Lengua', articulo: 'Idioma español' },
+  { id: 7, icono: <Scroll weight="duotone" />, materia: 'Historia', articulo: 'Historia' },
 ]
 
 export const destacados = [
@@ -83,7 +76,8 @@ export const ctas = [
     titulo: '¿Querés aprender?',
     texto: 'Explorá cientos de profesores particulares y empezá hoy mismo.',
     textoBoton: 'Buscar profesor',
-    fondo: 'dark',
+    fondo: 'oscuro',
+    icono: <Backpack weight="duotone" />,
     varianteBoton: 'primary',
   },
   {
@@ -91,7 +85,8 @@ export const ctas = [
     titulo: '¿Querés dar clases?',
     texto: 'Publicá tu oferta, elegí tus horarios y empezá a generar ingresos enseñando.',
     textoBoton: 'Ser profesor',
-    fondo: 'primary',
+    fondo: 'azul',
+    icono: <ChalkboardTeacher weight="duotone" />,
     varianteBoton: 'light',
   },
 ]
