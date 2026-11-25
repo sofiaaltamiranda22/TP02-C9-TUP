@@ -1,14 +1,82 @@
-/* Imagen de fondo y degrade oscuro del panel de Login y Registro (el resto son clases de Bootstrap) */
-.auth-visual {
-  min-height: 240px;
-  background: url("../assets/img/Fondo_Login_Register.png") left center / cover;
+/* Login y Registro: la ilustracion va de fondo en toda la pantalla y el formulario flota en el medio
+   (la imagen esta pensada asi: el buho a la izquierda, los libros a la derecha y el centro libre) */
+.auth-fondo {
+  background: #fbf3ea url("../assets/img/Fondo_Login_Register.png") center bottom / cover no-repeat;
 }
 
-.auth-visual::after {
-  content: "";
+/* En compu la imagen queda quieta y del tamaño de la pantalla, asi no se agranda en el registro (que es largo) */
+@media (min-width: 768px) {
+  .auth-fondo {
+    background-attachment: fixed;
+  }
+}
+
+/* En celular la pantalla es angosta: corremos la imagen para que se vea el buho abajo */
+@media (max-width: 767px) {
+  .auth-fondo {
+    background-size: auto 45%;
+    background-position: left bottom;
+    padding-bottom: 38vh !important;
+  }
+}
+
+.auth-tarjeta {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(6px);
+}
+
+.auth-tarjeta--chica {
+  max-width: 460px;
+}
+
+.auth-tarjeta--grande {
+  max-width: 760px;
+}
+
+/* Elegir rol con dos cuadros grandes en vez de radios chiquitos */
+.elegir-rol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.elegir-rol input {
   position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, rgba(8, 20, 40, 0.5) 0%, rgba(8, 20, 40, 0) 24%),
-    linear-gradient(to top, rgba(8, 20, 40, 0.85) 0%, rgba(8, 20, 40, 0) 60%);
+  opacity: 0;
+}
+
+.elegir-rol label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 1rem;
+  border: 2px solid var(--color-borde);
+  border-radius: 16px;
+  background: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.elegir-rol label span {
+  font-size: 2rem;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.elegir-rol label small {
+  font-weight: 500;
+  color: var(--color-texto-suave);
+  text-align: center;
+}
+
+.elegir-rol input:checked + label {
+  border-color: var(--color-primary);
+  background: var(--color-primary-suave);
+}
+
+.elegir-rol input:focus-visible + label {
+  box-shadow: 0 0 0 4px rgba(45, 140, 240, 0.2);
 }

@@ -1,19 +1,19 @@
-import { Badge, Card } from 'react-bootstrap'
 import Avatar from '../common/Avatar'
 import '../../styles/alumno.css'
+import '../../styles/bento.css'
 
-// Tarjeta de profesor con banner y avatar. Lo que va abajo (precio, botones) llega como children
+// Cuadro de profesor con franja de color y avatar. Lo que va abajo (precio, botones) llega como children
 function TarjetaProfesor({ nombre, iniciales, materia, children }) {
   return (
-    <Card as="article" className="profesor-card h-100 text-center">
-      <Card.Header className="bg-light py-4"></Card.Header>
-      <Card.Body className="d-flex flex-column align-items-center">
+    <article className="cuadro cuadro--hover profesor-card h-100 text-center p-0">
+      <header className="profesor-card-banner pt-4 pb-5"></header>
+      <section className="d-flex flex-column align-items-center flex-grow-1 px-4 pb-4">
         <Avatar iniciales={iniciales} tamano="grande" className="profesor-card-avatar" />
-        <Card.Title as="h3" className="mb-1">{nombre}</Card.Title>
-        <Badge bg="primary" pill className="mb-2">{materia}</Badge>
+        <h3 className="h5 mb-1">{nombre}</h3>
+        <p className="badge bg-primary rounded-pill mb-3">{materia}</p>
         {children}
-      </Card.Body>
-    </Card>
+      </section>
+    </article>
   )
 }
 export default TarjetaProfesor

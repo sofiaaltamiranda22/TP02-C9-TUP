@@ -1,6 +1,7 @@
 // Registro de alumno o profesor
+import { Backpack, ChalkboardTeacher, RocketLaunch } from '@phosphor-icons/react'
 import { useState, useEffect } from 'react'
-import { Form, Button, Row, Col, Alert } from 'react-bootstrap'
+import { Form, Button, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import ContenidoAuth from '../../components/auth/ContenidoAuth'
 import CampoPassword from '../../components/auth/CampoPassword'
@@ -9,8 +10,8 @@ import PantallaCarga from '../../components/common/PantallaCarga'
 import { cuentasDePrueba } from '../../data/cuentas'
 
 const roles = [
-  { valor: 'alumno', texto: 'Alumno' },
-  { valor: 'profesor', texto: 'Profesor' },
+  { valor: 'alumno', texto: 'Alumno', icono: <Backpack weight="duotone" />, detalle: 'Quiero tomar clases' },
+  { valor: 'profesor', texto: 'Profesor', icono: <ChalkboardTeacher weight="duotone" />, detalle: 'Quiero dar clases' },
 ]
 
 // Los completan alumnos y profesores
@@ -88,111 +89,102 @@ function Registro() {
 
       {destino && <PantallaCarga texto="Creando tu cuenta..." />}
 
-      <ContenidoAuth>
-        <h1 className="h2 mb-1">Sumate</h1>
-        <p className="text-body-secondary mb-4">Creá tu cuenta para empezar</p>
+      <ContenidoAuth tamano="grande">
+        <header className="text-center mb-4">
+          <p className="icono-auth mx-auto mb-3" aria-hidden="true"><RocketLaunch weight="duotone" /></p>
+          <h1 className="h2 mb-1">Sumate a MiProfe</h1>
+          <p className="text-body-secondary mb-0">Creá tu cuenta en un minuto</p>
+        </header>
 
         <Form onSubmit={crearCuenta} onChange={() => setError('')} className="d-flex flex-column gap-4">
           <fieldset>
-            <legend className="fs-6 fw-bold">Quiero registrarme como</legend>
-            {roles.map((opcion) => (
-              <Form.Check
-                inline
-                type="radio"
-                key={opcion.valor}
-                id={`rol-${opcion.valor}`}
-                name="rol"
-                label={opcion.texto}
-                checked={rol === opcion.valor}
-                onChange={() => setRol(opcion.valor)}
-              />
-            ))}
+            <legend className="fs-6 fw-bold mb-2">Quiero registrarme como</legend>
+            <section className="elegir-rol">
+              {roles.map((opcion) => (
+                <p className="mb-0 position-relative" key={opcion.valor}>
+                  <input
+                    type="radio"
+                    id={`rol-${opcion.valor}`}
+                    name="rol"
+                    checked={rol === opcion.valor}
+                    onChange={() => setRol(opcion.valor)}
+                  />
+                  <label htmlFor={`rol-${opcion.valor}`}>
+                    <span aria-hidden="true">{opcion.icono}</span>
+                    {opcion.texto}
+                    <small>{opcion.detalle}</small>
+                  </label>
+                </p>
+              ))}
+            </section>
           </fieldset>
 
           <fieldset>
             <legend className="fs-6 fw-bold">Tus datos</legend>
-            <Row className="g-3">
+            <section className="campos-grilla">
               {camposComunes.map((campo) => (
-                <Col md={6} key={campo.id}>
-                  <Form.Group controlId={campo.id}>
-                    <Form.Label>{campo.label}</Form.Label>
-                    <Form.Control
-                      type={campo.tipo}
-                      name={campo.id}
-                      placeholder={campo.placeholder}
-                      inputMode={campo.inputMode}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
+                <Form.Group controlId={campo.id} key={campo.id}>
+                  <Form.Label>{campo.label}</Form.Label>
+                  <Form.Control
+                    type={campo.tipo}
+                    name={campo.id}
+                    placeholder={campo.placeholder}
+                    inputMode={campo.inputMode}
+                    required
+                  />
+                </Form.Group>
               ))}
-              <Col md={6}>
-                <CampoPassword id="password" label="Contraseña" placeholder="Mínimo 8 caracteres" autoComplete="new-password" />
-              </Col>
-              <Col md={6}>
-                <CampoPassword id="password2" label="Confirmar contraseña" placeholder="Repetí la contraseña" autoComplete="new-password" />
-              </Col>
-            </Row>
+              <CampoPassword id="password" label="Contraseña" placeholder="Mínimo 8 caracteres" autoComplete="new-password" />
+              <CampoPassword id="password2" label="Confirmar contraseña" placeholder="Repetí la contraseña" autoComplete="new-password" />
+            </section>
           </fieldset>
 
           {rol === 'alumno' ? (
             <fieldset>
               <legend className="fs-6 fw-bold">Como alumno</legend>
-              <Row className="g-3">
-                <Col md={6}>
-                  <SelectNivel id="nivel" label="Nivel educativo" />
-                </Col>
-                <Col md={6}>
-                  <Form.Group controlId="modalidad">
-                    <Form.Label>Modalidad preferida</Form.Label>
-                    <Form.Select name="modalidad">
-                      {modalidades.map((modalidad) => (
-                        <option key={modalidad}>{modalidad}</option>
-                      ))}
-                    </Form.Select>
-                  </Form.Group>
-                </Col>
-                <Col xs={12}>
-                  <Form.Group controlId="materias">
-                    <Form.Label>Materias de interés</Form.Label>
-                    <Form.Control name="materias" placeholder="Ej: Matemática, Inglés" />
-                  </Form.Group>
-                </Col>
-              </Row>
+              <section className="campos-grilla">
+                <SelectNivel id="nivel" label="Nivel educativo" />
+                <Form.Group controlId="modalidad">
+                  <Form.Label>Modalidad preferida</Form.Label>
+                  <Form.Select name="modalidad">
+                    {modalidades.map((modalidad) => (
+                      <option key={modalidad}>{modalidad}</option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group controlId="materias" className="ocupa-todo">
+                  <Form.Label>Materias de interés</Form.Label>
+                  <Form.Control name="materias" placeholder="Ej: Matemática, Inglés" />
+                </Form.Group>
+              </section>
             </fieldset>
           ) : (
             <fieldset>
               <legend className="fs-6 fw-bold">Como profesor</legend>
-              <Row className="g-3">
+              <section className="campos-grilla">
                 {camposProfesor.map((campo) => (
-                  <Col md={6} key={campo.id}>
-                    <Form.Group controlId={campo.id}>
-                      <Form.Label>{campo.label}</Form.Label>
-                      <Form.Control type={campo.tipo} name={campo.id} placeholder={campo.placeholder} min="0" />
-                    </Form.Group>
-                  </Col>
+                  <Form.Group controlId={campo.id} key={campo.id}>
+                    <Form.Label>{campo.label}</Form.Label>
+                    <Form.Control type={campo.tipo} name={campo.id} placeholder={campo.placeholder} min="0" />
+                  </Form.Group>
                 ))}
-                <Col md={6}>
-                  <SelectNivel id="nivel" label="Nivel educativo que enseñás" />
-                </Col>
-                <Col xs={12}>
-                  <Form.Label className="d-block">Modalidad que ofrecés</Form.Label>
+                <SelectNivel id="nivel" label="Nivel educativo que enseñás" />
+                <fieldset className="ocupa-todo">
+                  <legend className="form-label">Modalidad que ofrecés</legend>
                   {modalidades.slice(0, 2).map((modalidad) => (
                     <Form.Check inline key={modalidad} id={`modalidad-${modalidad}`} name="modalidad" label={modalidad} />
                   ))}
-                </Col>
-                <Col xs={12}>
-                  <Form.Group controlId="descripcion">
-                    <Form.Label>Sobre mí</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      rows={3}
-                      name="descripcion"
-                      placeholder="Contales a los alumnos sobre tu experiencia y metodología"
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
+                </fieldset>
+                <Form.Group controlId="descripcion" className="ocupa-todo">
+                  <Form.Label>Sobre mí</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    name="descripcion"
+                    placeholder="Contales a los alumnos sobre tu experiencia y metodología"
+                  />
+                </Form.Group>
+              </section>
             </fieldset>
           )}
 
@@ -205,7 +197,7 @@ function Registro() {
 
           {error && <Alert variant="danger" className="mb-0">{error}</Alert>}
 
-          <Button type="submit" className="w-100">Crear cuenta</Button>
+          <Button type="submit" className="w-100 py-2">Crear cuenta</Button>
         </Form>
 
         <p className="text-center mt-4 mb-0">

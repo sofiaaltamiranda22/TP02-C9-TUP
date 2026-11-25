@@ -1,8 +1,9 @@
 // Seccion del perfil del profesor con la descripcion de su materia, que se pide a la API de Wikipedia
+import { BookOpenText } from '@phosphor-icons/react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import { Card, Button, Spinner } from 'react-bootstrap'
+import { Button, Spinner } from 'react-bootstrap'
 import { articulosWikipedia } from '../../data/alumno'
 
 // La URL de la API sale del archivo .env, no se escribe en el componente
@@ -56,37 +57,35 @@ function SobreMateria({ materia }) {
   }
 
   return (
-    <section id="sobre-materia">
-      <h2 className="h4 mb-3">Sobre {materia}</h2>
+    <section id="sobre-materia" className="cuadro ancho-7">
+      <h2 className="titulo-con-icono"><BookOpenText weight="duotone" /> Sobre {materia}</h2>
 
       {cargando && (
-        <div className="d-flex align-items-center gap-2" role="status">
-          <Spinner animation="border" size="sm" variant="primary" />
+        <p className="d-flex align-items-center gap-2 mb-0" role="status">
+          <Spinner as="span" animation="border" size="sm" variant="primary" />
           <span>Buscando información de la materia...</span>
-        </div>
+        </p>
       )}
 
       {!cargando && error && (
-        <div className="d-flex flex-wrap align-items-center gap-3">
-          <p className="mb-0">No pudimos traer la información de {materia}.</p>
+        <p className="d-flex flex-wrap align-items-center gap-3 mb-0">
+          No pudimos traer la información de {materia}.
           <Button variant="outline-dark" size="sm" onClick={reintentar}>Reintentar</Button>
-        </div>
+        </p>
       )}
 
       {!cargando && info && (
-        <Card>
-          <Card.Body className="d-flex flex-column flex-md-row gap-3">
-            {info.thumbnail && (
-              <img src={info.thumbnail.source} alt={info.title} width="120" className="rounded align-self-start" />
-            )}
-            <div>
-              <Card.Text>{info.extract}</Card.Text>
-              <a href={info.content_urls.desktop.page} target="_blank" rel="noreferrer" className="small">
-                Leer más en Wikipedia
-              </a>
-            </div>
-          </Card.Body>
-        </Card>
+        <article className="d-flex flex-column flex-md-row gap-3">
+          {info.thumbnail && (
+            <img src={info.thumbnail.source} alt={info.title} width="120" className="rounded align-self-start" />
+          )}
+          <section>
+            <p>{info.extract}</p>
+            <a href={info.content_urls.desktop.page} target="_blank" rel="noreferrer" className="small">
+              Leer más en Wikipedia
+            </a>
+          </section>
+        </article>
       )}
     </section>
   )

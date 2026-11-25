@@ -1,7 +1,9 @@
 // Solicitudes de alumnos
+import { Confetti, Tray } from '@phosphor-icons/react'
 import { useState, useEffect } from 'react'
-import { Alert, Button } from 'react-bootstrap'
+import { Alert } from 'react-bootstrap'
 import ContenidoPagina from '../../components/layout/ContenidoPagina'
+import EncabezadoPagina from '../../components/common/EncabezadoPagina'
 import TarjetaSolicitud from '../../components/profesor/TarjetaSolicitud'
 import { solicitudes } from '../../data/profesor'
 
@@ -32,38 +34,47 @@ function Solicitudes() {
       <meta name="robots" content="noindex" />
 
       <ContenidoPagina>
-        <section>
-          <h1 className="mb-2">Solicitudes de alumnos</h1>
-          <p className="text-body-secondary mb-4">
-            {pendientes.length > 0
-              ? `Tenés ${pendientes.length} solicitudes pendientes.`
-              : 'No tenés solicitudes pendientes.'}
-          </p>
+        <EncabezadoPagina
+          icono={<Tray weight="duotone" />}
+          titulo="Solicitudes de alumnos"
+          bajada={
+            pendientes.length > 0
+              ? `Tenés ${pendientes.length} ${pendientes.length === 1 ? 'solicitud pendiente' : 'solicitudes pendientes'}.`
+              : 'No tenés solicitudes pendientes.'
+          }
+        />
 
+        <section aria-label="Lista de solicitudes" className="d-flex flex-column gap-3">
           {aviso && (
-            <Alert variant={aviso.variante} dismissible onClose={() => setAviso(null)}>
+            <Alert variant={aviso.variante} dismissible onClose={() => setAviso(null)} className="mb-0">
               {aviso.texto}
             </Alert>
           )}
 
-          <div className="d-flex flex-column gap-3">
-            {pendientes.map((solicitud) => (
-              <TarjetaSolicitud
-                key={solicitud.id}
-                nombre={solicitud.nombre}
-                iniciales={solicitud.iniciales}
-                materia={solicitud.materia}
-                horario={solicitud.horario}
-                onAceptar={() => responder(solicitud, true)}
-                onRechazar={() => responder(solicitud, false)}
-              />
-            ))}
-          </div>
-
-          {pendientes.length === 0 && (
-            <Button variant="outline-dark" onClick={() => setPendientes(solicitudes)}>
-              Volver a cargar las solicitudes de ejemplo
-            </Button>
+          {pendientes.length === 0 ? (
+            <article className="cuadro text-center align-items-center py-5">
+              <p className="icono-auth mx-auto mb-3" aria-hidden="true"><Confetti weight="duotone" /></p>
+              <h2 className="h4">¡Estás al día!</h2>
+              <p className="text-body-secondary">Respondiste todas las solicitudes.</p>
+              <button type="button" className="btn btn-outline-dark" onClick={() => setPendientes(solicitudes)}>
+                Volver a cargar las solicitudes de ejemplo
+              </button>
+            </article>
+          ) : (
+            <ul className="grilla-2">
+              {pendientes.map((solicitud) => (
+                <li key={solicitud.id}>
+                  <TarjetaSolicitud
+                    nombre={solicitud.nombre}
+                    iniciales={solicitud.iniciales}
+                    materia={solicitud.materia}
+                    horario={solicitud.horario}
+                    onAceptar={() => responder(solicitud, true)}
+                    onRechazar={() => responder(solicitud, false)}
+                  />
+                </li>
+              ))}
+            </ul>
           )}
         </section>
       </ContenidoPagina>

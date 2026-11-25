@@ -14,31 +14,36 @@ function TarjetaPerfilProfesor({ nombre, iniciales, materia, calificacion, canti
   ]
 
   return (
-    <Card as="article" className="overflow-hidden">
-      <div className="bg-primary py-1"></div>
-      <Card.Body className="d-flex flex-column flex-sm-row align-items-sm-center gap-4">
-        <Avatar iniciales={iniciales} tamano="grande" />
-        <div>
-          <Card.Title as="h2" className="mb-1">{nombre}</Card.Title>
-          <Badge bg="primary" pill>{materia}</Badge>
-          <p className="my-2">
-            <span className="text-warning" aria-hidden="true">
-              {'★'.repeat(estrellas)}
-              {'☆'.repeat(5 - estrellas)}
-            </span>{' '}
-            {calificacion} ({cantidadResenas} reseñas)
-          </p>
-          <ul className="list-unstyled d-flex flex-wrap gap-3 mb-3">
-            {datos.map((dato) => (
-              <li key={dato.etiqueta}>
-                <strong>{dato.etiqueta}:</strong> {dato.valor}
-              </li>
-            ))}
-          </ul>
-          <Button as={Link} to="/profesor/editar-perfil" variant="outline-dark" size="sm">
-            Editar perfil
-          </Button>
+    <Card as="article">
+      <Card.Body className="p-4">
+        <div className="d-flex align-items-center gap-3 mb-3">
+          <Avatar iniciales={iniciales} tamano="grande" />
+          <div>
+            <Card.Title as="h3" className="h4 mb-1">{nombre}</Card.Title>
+            <Badge bg="primary" pill>{materia}</Badge>
+            <p className="mb-0 mt-1 small">
+              <span className="text-warning" aria-hidden="true">
+                {'★'.repeat(estrellas)}
+                {'☆'.repeat(5 - estrellas)}
+              </span>{' '}
+              <strong>{calificacion}</strong> ({cantidadResenas} reseñas)
+            </p>
+          </div>
         </div>
+
+        {/* Datos en una grilla de 2 columnas: etiqueta chiquita arriba y el valor abajo */}
+        <dl className="row g-3 mb-4">
+          {datos.map((dato) => (
+            <div className="col-6" key={dato.etiqueta}>
+              <dt className="small text-body-secondary fw-semibold">{dato.etiqueta}</dt>
+              <dd className="fw-bold mb-0">{dato.valor}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <Button as={Link} to="/profesor/editar-perfil" variant="outline-dark" size="sm">
+          Editar perfil
+        </Button>
       </Card.Body>
     </Card>
   )

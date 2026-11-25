@@ -1,7 +1,8 @@
 // Profesores contratados
-import { Row, Col, Button } from 'react-bootstrap'
+import { GraduationCap } from '@phosphor-icons/react'
 import { Link } from 'react-router-dom'
 import ContenidoPagina from '../../components/layout/ContenidoPagina'
+import EncabezadoPagina from '../../components/common/EncabezadoPagina'
 import TarjetaProfesor from '../../components/alumno/TarjetaProfesor'
 import { profesores } from '../../data/alumno'
 
@@ -14,32 +15,32 @@ function MisProfesores() {
       <meta name="robots" content="noindex" />
 
       <ContenidoPagina>
-        <section>
-          <h1 className="mb-4">Mis profesores</h1>
-          <Row className="g-4">
-            {contratados.map((profesor) => (
-              <Col md={6} lg={3} key={profesor.id}>
-                <TarjetaProfesor nombre={profesor.nombre} iniciales={profesor.iniciales} materia={profesor.materia}>
-                  <p className="mb-3">Próxima clase: {profesor.proximaClase}</p>
-                  <div className="d-flex gap-2 mt-auto">
-                    <Button
-                      as={Link}
-                      to={`/alumno/profesores/${profesor.id}`}
-                      variant="outline-dark"
-                      size="sm"
-                      className="rounded-pill"
-                    >
-                      Ver perfil
-                    </Button>
-                    <Button as={Link} to="/alumno/chat" size="sm" className="rounded-pill">
-                      Chatear
-                    </Button>
-                  </div>
-                </TarjetaProfesor>
-              </Col>
-            ))}
-          </Row>
-        </section>
+        <EncabezadoPagina
+          icono={<GraduationCap weight="duotone" />}
+          titulo="Mis profesores"
+          bajada={`Tenés ${contratados.length} ${contratados.length === 1 ? 'profesor' : 'profesores'} con clases activas.`}
+        />
+
+        <ul className="grilla-profesores" aria-label="Profesores contratados">
+          {contratados.map((profesor) => (
+            <li key={profesor.id}>
+              <TarjetaProfesor nombre={profesor.nombre} iniciales={profesor.iniciales} materia={profesor.materia}>
+                <p className="mb-3">
+                  <span className="cuadro-etiqueta d-block pe-0">Próxima clase</span>
+                  <time className="fw-bold">{profesor.proximaClase}</time>
+                </p>
+                <nav className="d-flex gap-2 mt-auto w-100" aria-label={`Acciones con ${profesor.nombre}`}>
+                  <Link to={`/alumno/profesores/${profesor.id}`} className="btn btn-outline-dark btn-sm flex-grow-1">
+                    Ver perfil
+                  </Link>
+                  <Link to="/alumno/chat" className="btn btn-primary btn-sm flex-grow-1">
+                    Chatear
+                  </Link>
+                </nav>
+              </TarjetaProfesor>
+            </li>
+          ))}
+        </ul>
       </ContenidoPagina>
     </>
   )
