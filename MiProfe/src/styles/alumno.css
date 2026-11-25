@@ -1,16 +1,22 @@
 /* Lo que Bootstrap no trae: el resto son clases de Bootstrap en los componentes de alumno */
 .profesor-card {
-  transition: 0.15s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Al pasar el mouse la tarjeta sube un poquito */
 .profesor-card:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 7px 7px var(--border-color);
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-hover);
+}
+
+/* Franja de color de arriba de la tarjeta */
+.profesor-card-banner {
+  background: linear-gradient(120deg, var(--color-primary-suave), #f3f9ff);
 }
 
 .profesor-card-avatar {
   margin: -48px auto 0.75rem;
-  box-shadow: var(--shadow);
+  border: 4px solid #fff;
 }
 
 .message {

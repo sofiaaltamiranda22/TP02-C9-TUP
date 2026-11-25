@@ -1,9 +1,12 @@
 // Grupos del profesor
-import { Row, Col, Button } from 'react-bootstrap'
+import { BookOpenText, UsersThree } from '@phosphor-icons/react'
 import { Link } from 'react-router-dom'
 import ContenidoPagina from '../../components/layout/ContenidoPagina'
-import TarjetaResumen from '../../components/profesor/TarjetaResumen'
+import EncabezadoPagina from '../../components/common/EncabezadoPagina'
 import { grupos } from '../../data/profesor'
+
+// Cada grupo va de un color distinto (se repiten si hay mas grupos que colores)
+const colores = ['violeta', 'verde', 'amarillo']
 
 function GruposProfesor() {
   return (
@@ -12,21 +15,23 @@ function GruposProfesor() {
       <meta name="robots" content="noindex" />
 
       <ContenidoPagina>
-        <section>
-          <h1 className="mb-2">Mis grupos</h1>
-          <p className="text-body-secondary mb-4">Los grupos de estudio que armaste con tus alumnos.</p>
-          <Row className="g-4">
-            {grupos.map((grupo) => (
-              <Col md={6} key={grupo.id}>
-                <TarjetaResumen titulo={grupo.nombre} numero={grupo.alumnos} detalle="alumnos en el grupo" color={grupo.color}>
-                  <Button as={Link} to="/profesor/chat" className="mt-auto">
-                    Ir al chat del grupo
-                  </Button>
-                </TarjetaResumen>
-              </Col>
-            ))}
-          </Row>
-        </section>
+        <EncabezadoPagina icono={<UsersThree weight="duotone" />} titulo="Mis grupos" bajada="Los grupos de estudio que armaste con tus alumnos." />
+
+        <ul className="grilla-2" aria-label="Grupos">
+          {grupos.map((grupo, indice) => (
+            <li key={grupo.id}>
+              <article className={`cuadro cuadro--${colores[indice % colores.length]} cuadro--hover`}>
+                <span className="cuadro-icono" aria-hidden="true"><BookOpenText weight="duotone" /></span>
+                <h2 className="cuadro-etiqueta">{grupo.nombre}</h2>
+                <p className="cuadro-numero">{grupo.alumnos}</p>
+                <p className="text-body-secondary mb-4">alumnos en el grupo</p>
+                <Link to="/profesor/chat" className="btn btn-primary mt-auto align-self-start">
+                  Ir al chat del grupo →
+                </Link>
+              </article>
+            </li>
+          ))}
+        </ul>
       </ContenidoPagina>
     </>
   )

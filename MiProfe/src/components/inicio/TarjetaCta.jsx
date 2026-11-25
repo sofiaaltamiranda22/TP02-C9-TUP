@@ -1,17 +1,16 @@
-import { Card, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-function TarjetaCta({ titulo, texto, textoBoton, fondo, varianteBoton }) {
+// Cuadro grande del final que invita a registrarse. fondo: 'oscuro' o 'azul'
+function TarjetaCta({ titulo, texto, textoBoton, fondo, varianteBoton, icono }) {
   return (
-    <Card as="article" bg={fondo} text="white" className="h-100">
-      <Card.Body>
-        <Card.Title as="h3">{titulo}</Card.Title>
-        <Card.Text>{texto}</Card.Text>
-        <Button as={Link} to="/registro" variant={varianteBoton}>
-          {textoBoton}
-        </Button>
-      </Card.Body>
-    </Card>
+    <article className={`cuadro cuadro--${fondo} ancho-6 p-4 p-md-5`}>
+      <span className="cuadro-icono" aria-hidden="true">{icono}</span>
+      <h3 className="h2 mb-2">{titulo}</h3>
+      <p className="mb-4">{texto}</p>
+      <Link to="/registro" className={`btn btn-${varianteBoton} align-self-start mt-auto`}>
+        {textoBoton} →
+      </Link>
+    </article>
   )
 }
 

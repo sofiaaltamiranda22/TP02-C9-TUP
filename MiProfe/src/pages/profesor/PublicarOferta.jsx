@@ -1,10 +1,12 @@
 // Publicar oferta de clases
+import { Lightbulb, Megaphone } from '@phosphor-icons/react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import { Form, Button, Row, Col, Alert, Spinner } from 'react-bootstrap'
+import { Form, Button, Alert, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import ContenidoPagina from '../../components/layout/ContenidoPagina'
+import EncabezadoPagina from '../../components/common/EncabezadoPagina'
 import SelectNivel from '../../components/common/SelectNivel'
 import { modalidades } from '../../data/profesor'
 
@@ -94,11 +96,14 @@ function PublicarOferta() {
       <meta name="robots" content="noindex" />
 
       <ContenidoPagina>
-        <section>
-          <h1 className="mb-2">Publicar oferta de clases</h1>
-          <p className="text-body-secondary mb-4">
-            Contales a los alumnos qué enseñás, cuánto cobrás y cuándo podés dar clases.
-          </p>
+        <EncabezadoPagina
+          icono={<Megaphone weight="duotone" />}
+          titulo="Publicar oferta de clases"
+          bajada="Contales a los alumnos qué enseñás, cuánto cobrás y cuándo podés dar clases."
+        />
+
+        <section className="bento">
+          <article className="cuadro ancho-8 p-4 p-md-5">
 
           {publicada && (
             <Alert variant="success" dismissible onClose={() => setPublicada(false)}>
@@ -107,8 +112,8 @@ function PublicarOferta() {
           )}
 
           <Form onSubmit={publicar}>
-            <Row className="g-3">
-              <Col md={6}>
+            <section className="campos-grilla">
+              <section>
                 <Form.Group controlId="materia">
                   <Form.Label>Materia</Form.Label>
                   <Form.Control
@@ -119,42 +124,42 @@ function PublicarOferta() {
                     required
                   />
                 </Form.Group>
-              </Col>
-              <Col md={6}>
+              </section>
+              <section>
                 <SelectNivel id="nivel" label="Nivel educativo" />
-              </Col>
+              </section>
 
               {mostrarBuscando && (
-                <Col xs={12} className="d-flex align-items-center gap-2" role="status">
-                  <Spinner animation="border" size="sm" variant="primary" />
+                <p className="ocupa-todo d-flex align-items-center gap-2 mb-0" role="status">
+                  <Spinner as="span" animation="border" size="sm" variant="primary" />
                   <span>Buscando la materia en Wikipedia...</span>
-                </Col>
+                </p>
               )}
 
               {mostrarVistaPrevia && vistaPrevia.encontrada && (
-                <Col xs={12}>
-                  <div className="p-3 bg-light border rounded d-flex flex-column flex-md-row gap-3">
+                <section className="ocupa-todo">
+                  <figure className="p-3 bg-body-tertiary rounded-4 d-flex flex-column flex-md-row gap-3 m-0">
                     {vistaPrevia.imagen && (
                       <img src={vistaPrevia.imagen} alt={vistaPrevia.titulo} width="96" className="rounded align-self-start" />
                     )}
-                    <div>
+                    <figcaption>
                       <p className="small text-body-secondary mb-1">Así van a ver los alumnos la materia en tu perfil:</p>
                       <h2 className="h6 mb-1">{vistaPrevia.titulo}</h2>
                       <p className="small mb-0">{vistaPrevia.resumen}</p>
-                    </div>
-                  </div>
-                </Col>
+                    </figcaption>
+                  </figure>
+                </section>
               )}
 
               {mostrarVistaPrevia && !vistaPrevia.encontrada && (
-                <Col xs={12}>
+                <section className="ocupa-todo">
                   <p className="small text-body-secondary mb-0">
                     No encontramos una descripción para «{vistaPrevia.busqueda}». Revisá cómo está escrita o probá con
                     otro nombre (por ejemplo, «Idioma inglés»).
                   </p>
-                </Col>
+                </section>
               )}
-              <Col xs={12}>
+              <section className="ocupa-todo">
                 <Form.Group controlId="descripcion">
                   <Form.Label>Descripción</Form.Label>
                   <Form.Control
@@ -164,14 +169,14 @@ function PublicarOferta() {
                     placeholder="Contales a los alumnos sobre tu experiencia y metodología"
                   />
                 </Form.Group>
-              </Col>
-              <Col md={6}>
+              </section>
+              <section>
                 <Form.Group controlId="precio">
                   <Form.Label>Precio por hora</Form.Label>
                   <Form.Control type="number" name="precio" min="0" placeholder="4500" required />
                 </Form.Group>
-              </Col>
-              <Col md={6}>
+              </section>
+              <section>
                 <Form.Label className="d-block">Modalidad</Form.Label>
                 {modalidades.map((modalidad) => (
                   <Form.Check
@@ -183,28 +188,39 @@ function PublicarOferta() {
                     label={modalidad}
                   />
                 ))}
-              </Col>
-              <Col md={6}>
+              </section>
+              <section>
                 <Form.Group controlId="zona">
                   <Form.Label>Zona / Ubicación</Form.Label>
                   <Form.Control name="zona" placeholder="Ej: Barrio Sur, San Miguel de Tucumán" />
                 </Form.Group>
-              </Col>
-              <Col md={6}>
+              </section>
+              <section>
                 <Form.Group controlId="horarios">
                   <Form.Label>Horarios disponibles</Form.Label>
                   <Form.Control name="horarios" placeholder="Ej: Lunes a viernes de 16 a 20hs" />
                 </Form.Group>
-              </Col>
-            </Row>
+              </section>
+            </section>
 
-            <div className="d-flex gap-2 mt-4">
+            <footer className="d-flex flex-wrap gap-2 mt-4">
               <Button type="submit">Publicar oferta</Button>
               <Button as={Link} to="/profesor" variant="outline-dark">
                 Cancelar
               </Button>
-            </div>
+            </footer>
           </Form>
+          </article>
+
+          <aside className="cuadro cuadro--amarillo ancho-4 p-4">
+            <h2 className="titulo-con-icono"><Lightbulb weight="duotone" /> Consejos para tu oferta</h2>
+            <ul className="lista-cuadro">
+              <li className="bg-white">Escribí la materia completa (ej: «Álgebra de secundario»).</li>
+              <li className="bg-white">Contá cómo son tus clases y qué experiencia tenés.</li>
+              <li className="bg-white">Poné horarios concretos: los alumnos eligen por eso.</li>
+              <li className="bg-white">Un precio claro genera más confianza.</li>
+            </ul>
+          </aside>
         </section>
       </ContenidoPagina>
     </>

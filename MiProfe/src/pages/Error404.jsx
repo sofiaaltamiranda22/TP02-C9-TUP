@@ -1,7 +1,7 @@
 // Pagina 404 para las rutas que no existen
-import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import ContenidoPagina from '../components/layout/ContenidoPagina'
+import logo from '../assets/img/Logo_Principal.png'
 
 function Error404() {
   return (
@@ -10,14 +10,15 @@ function Error404() {
       <meta name="robots" content="noindex" />
 
       <ContenidoPagina>
-        <section className="text-center py-4">
-          <p className="display-1 fw-bold text-primary mb-0">404</p>
-          <h1 className="mb-3">Página no encontrada</h1>
+        <article className="cuadro text-center align-items-center py-5 px-4 mx-auto" style={{ maxWidth: '560px' }}>
+          <img src={logo} alt="" width="120" height="120" className="rounded-circle mb-3" />
+          <p className="display-1 fw-bold text-primary mb-0 mi-titulo">404</p>
+          <h1 className="h2 mb-2">Uy, esta página no existe</h1>
           <p className="text-body-secondary mb-4">La dirección que buscás no existe o se movió.</p>
-          <Button as={Link} to="/">
+          <Link to="/" className="btn btn-primary">
             Volver al inicio
-          </Button>
-        </section>
+          </Link>
+        </article>
       </ContenidoPagina>
     </>
   )

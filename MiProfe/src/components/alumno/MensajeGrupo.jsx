@@ -1,13 +1,10 @@
-import '../../styles/alumno.css'
-
+// Burbuja de un mensaje del chat del alumno (va adentro de una lista <ol>)
 function MensajeGrupo({ texto, hora, propio }) {
-  const lado = propio ? 'align-self-end bg-primary text-white' : 'align-self-start bg-white'
-
   return (
-    <div className={`message px-3 py-2 border border-2 border-dark rounded small ${lado}`}>
+    <li className={`burbuja ${propio ? 'burbuja--propia' : ''}`}>
       <p className="mb-1">{texto}</p>
-      <span className="small opacity-75">{hora}</span>
-    </div>
+      <time className="burbuja-meta">{hora}</time>
+    </li>
   )
 }
 
